@@ -13,7 +13,7 @@ import {
   X,
 } from "lucide-react";
 
-const API_BASE = "http://localhost:5000";
+const API_BASE =import.meta.env.VITE_BASE_URL;
 
 const PLACEHOLDER_THUMB =
   "https://via.placeholder.com/800x450?text=No+Thumbnail";

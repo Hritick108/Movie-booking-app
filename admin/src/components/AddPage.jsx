@@ -18,7 +18,7 @@ import {
   Ampersand,
 } from "lucide-react";
 
-const API_HOST = "http://localhost:5000";
+const API_HOST =import.meta.env.VITE_BASE_URL;
 
 const AddPage = () => {
   // form state

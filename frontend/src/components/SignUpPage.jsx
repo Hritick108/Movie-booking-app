@@ -16,7 +16,7 @@ import {
 } from "lucide-react";
 import axios from "axios";
 
-const API_BASE = "http://localhost:5000/api/auth";
+const API_BASE =`${import.meta.env.VITE_BASE_URL}/api/auth`;
 
 const SignUpPage = () => {
   const [formData, setFormData] = useState({
