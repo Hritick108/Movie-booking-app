@@ -16,7 +16,7 @@ const port = process.env.PORT || 5000;
 app.use(cors({
   origin: [
     "http://localhost:5173",
-    "https://movie-booking-app-alpha-ochre.vercel.app/",
+    "https://movie-booking-app-alpha-ochre.vercel.app",
   ],
   credentials: true
 }));
