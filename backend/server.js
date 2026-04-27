@@ -13,7 +13,13 @@ const port = process.env.PORT || 5000;
 
 // MIDDEL-WARE 
 
-app.use(cors());
+app.use(cors({
+  origin: [
+    "http://localhost:5173",
+    "https://movie-booking-app-alpha-ochre.vercel.app/",
+  ],
+  credentials: true
+}));
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
