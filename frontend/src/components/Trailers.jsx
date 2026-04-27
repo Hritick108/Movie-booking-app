@@ -160,7 +160,6 @@ const Trailers = () => {
         const json = await res.json();
         const items = Array.isArray(json.items) ? json.items : [];
          const mapped = items.map(mapMovieToTrailerItem)
-         console.log(mapped);
          setTrailers(mapped);
          setFeaturedTrailer(mapped[0] || null);
          setLoading(false);

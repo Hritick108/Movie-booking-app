@@ -83,6 +83,7 @@ const Navbar = () => {
     localStorage.removeItem('isLoggedIn');
     localStorage.removeItem('userEmail');
     localStorage.removeItem('cine_user_email');
+    localStorage.removeItem("token"); 
     setIsLoggedIn(false);
     setUserEmail("");
     window.location.href = "/login"; // Redirect to login page after logout
@@ -214,7 +215,7 @@ const Navbar = () => {
                   setIsMenuOpen(false);
                   handleLogout();
                 }} className={navbarStyles.mobileLogoutButton} >
-                  <Logut className={navbarStyles.mobileAuthIcon} />
+                  <LogOut className={navbarStyles.mobileAuthIcon} />
                   LogOut
                 </button>
               ) : ( 

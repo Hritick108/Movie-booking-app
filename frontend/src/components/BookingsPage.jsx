@@ -15,7 +15,7 @@ function getStoredToken() {
   return (
     localStorage.getItem("token") ||
     localStorage.getItem("authToken") ||
-    localStorage.getitem("accessToken") ||
+    localStorage.getItem("accessToken") ||
     null
   );
 }
@@ -96,6 +96,8 @@ const BookingsPage = () => {
       try {
         const token = getStoredToken();
         if (!token) {
+          setBookings([]);
+          setLoading(false);
           navigate("/login");
           return;
         }
@@ -180,6 +182,7 @@ const BookingsPage = () => {
         const status = err?.response?.status;
         if (status === 401 || status === 403) {
           localStorage.removeItem("token");
+          setBookings([])
           navigate("/login");
           return;
         }
@@ -198,7 +201,8 @@ const BookingsPage = () => {
     fetchMyBookings();
     return () => {
       mounted = false;
-    };
+
+    };  
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
