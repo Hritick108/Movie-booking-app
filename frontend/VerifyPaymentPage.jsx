@@ -22,7 +22,7 @@ const VerifyPaymentPage = () => {
         navigate("/", { replace: true });
         return;
       }
-      if (payment_id) {
+      if (!session_id) {
         setStatusMsg("No session_id provided in the URL");
         return;
       }
@@ -35,7 +35,7 @@ const VerifyPaymentPage = () => {
           {
             params: { session_id },
             headers: token ? { Authorization: `Bearer ${token}` } : {},
-            timeout: 1500,
+            timeout: 5000,
           }
         );
 

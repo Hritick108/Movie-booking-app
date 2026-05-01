@@ -109,7 +109,7 @@ const App = () => {
           path="/movie/:id/seat-selector/:slot"
           element={<SeatSelectorPageHome />}
         />
-          <Route path="/success" element={<VerifyPaymentPage/>} />
+          <Route path="/verify-payment" element={<VerifyPaymentPage/>} />
           <Route path="/cancel" element={<VerifyPaymentPage/>} />
       </Routes>
 

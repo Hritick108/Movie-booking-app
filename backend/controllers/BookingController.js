@@ -368,7 +368,7 @@ export async function createBooking(req, res) {
               quantity: 1,
             },
           ],
-          success_url: `${CLIENT_URL}/success?session_id={CHECKOUT_SESSION_ID}`,
+          success_url: `${CLIENT_URL}/verify-payment?session_id={CHECKOUT_SESSION_ID}`,
           cancel_url: `${CLIENT_URL}/cancel?session_id={CHECKOUT_SESSION_ID}`,
           metadata: {
             bookingId: String(booking._id),
@@ -507,7 +507,7 @@ export async function deleteBooking(req, res) {
     const { id } = req.params;
     if (!id || !mongoose.Types.ObjectId.isValid(id))
       return res.status(400).json({
-        sucess: false,
+        success: false,
         message: "Invalid id",
       });
     const b = await Booking.findByIdAndDelete(id).lean().exec();
@@ -516,7 +516,7 @@ export async function deleteBooking(req, res) {
         success: false,
         message: " Booking not found",
       });
-    return res.json({ sucess: true, message: "Booking Deleted." });
+    return res.json({ success: true, message: "Booking Deleted." });
   } catch (err) {
     console.error("deleteBooking error:", err && err.stack ? err.stack : err);
     return res.status(500).json({
@@ -598,16 +598,16 @@ export async function getOccupiedSeats(req, res) {
 
 export async function confirmPayment(req, res) {
   try {
-    const { session_Id } = req.query;
-    if (!session_Id)
+    const { session_id } = req.query;
+    if (!session_id)
       return res.status(400).json({
         success: false,
         message: "session_id required",
       });
 
-    let String;
+    let stripe;
     try {
-      Stripe = getStripeOrThrow();
+      stripe = getStripeOrThrow();
     } catch (err) {
       return res.status(500).json({
         success: false,
@@ -615,15 +615,15 @@ export async function confirmPayment(req, res) {
         error: err.message,
       });
     }
-    const sessionObj = await stripe.checkout.sessions.retrieve(session_Id);
+    const sessionObj = await stripe.checkout.sessions.retrieve(session_id);
     if (!sessionObj)
       return res
         .status(404)
-        .json({ sucess: false, message: "Failed to find session" });
+        .json({ success: false, message: "Failed to find session" });
     if (sessionObj.payment_status !== "paid") {
       return res
         .status(400)
-        .json({ sucess: false, message: "Payment not completed." });
+        .json({ success: false, message: "Payment not completed." });
     }
 
     const bookingId = sessionObj.metadata?.bookingId;
@@ -646,10 +646,10 @@ export async function confirmPayment(req, res) {
 
     if (!booking)
       return res.status(404).json({
-        sucess: false,
+        success: false,
         message: "Booking not found for this session.",
       });
-    return res.json({ sucess: true, booking });
+    return res.json({ success: true, booking });
   } catch (err) {
     console.error("confirmpayment error:", err.stack ? err.stack : err);
     return res.status(500).json({
